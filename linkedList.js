@@ -2,36 +2,76 @@ import { Node } from "./node.js";
 
 export class LinkedList {
   constructor(passedHead = null, passedTail = null) {
-    this.head = passedHead;
-    this.tail = passedTail;
-    this.size = 0;
+    this.Head = passedHead;
+    this.Tail = passedTail;
+    this.Size = 0;
   }
 
   append = (value) => {
     const newNode = new Node(value);
-    if (this.head === null) {
-      this.head = newNode;
+    if (this.Head === null) {
+      this.Head = newNode;
     } else {
-      this.tail.next = newNode;
+      this.Tail.next = newNode;
     }
-    this.tail = newNode;
-    this.size++;
+    this.Tail = newNode;
+    this.Size++;
+  };
+
+  prepend = (value) => {
+    const newNode = new Node(value);
+
+    if (this.Head) {
+      newNode.next = this.Head;
+    } else {
+      this.Tail = newNode;
+    }
+    this.Head = newNode;
+    this.Size++;
+  };
+
+  size = () => {
+    return this.Size;
+  };
+
+  head = () => {
+    return this.Head;
+  };
+
+  tail = () => {
+    return this.Tail;
+  };
+
+  at = (index) => {
+    if (index > this.Size - 1) return "Index out of bounds";
+    let currentNode = this.Head;
+    for (let i = 0; i < index; i++) {
+      currentNode = currentNode.next;
+    }
+    return currentNode;
+  };
+
+  pop = () => {
+    if (!this.Head) return;
+    if (this.Head === this.Tail) {
+      this.Head = null;
+      this.Tail = null;
+
+      this.Size = 0;
+    } else {
+      let currentNode = this.Head;
+
+      while (currentNode.next !== this.Tail) {
+        currentNode = currentNode.next;
+      }
+
+      currentNode.next = null;
+      this.Tail = currentNode;
+
+      this.Size--;
+    }
   };
 }
-
-console.log(Node);
-
-// Append Value
-
-// Prepend Value
-
-// Size
-
-// Head
-
-// Tail
-
-// At Index
 
 // Pop (remove)
 
