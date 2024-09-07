@@ -71,16 +71,112 @@ export class LinkedList {
       this.Size--;
     }
   };
+
+  contains = (value) => {
+    let currentNode = this.Head;
+
+    while (currentNode !== null) {
+      if (currentNode.value === value) return true;
+      currentNode = currentNode.next;
+    }
+    return false;
+  };
+
+  find = (value) => {
+    let currentNode = this.Head;
+    let currentIndex = 0;
+
+    while (currentNode !== null) {
+      if (currentNode.value === value) return currentIndex;
+
+      currentNode = currentNode.next;
+      currentIndex++;
+    }
+    return null;
+  };
+
+  toString = () => {
+    let currentNode = this.Head;
+    let string = "";
+
+    while (currentNode !== null) {
+      string = string + `( ${currentNode.value} ) -> `;
+      currentNode = currentNode.next;
+    }
+
+    string = string + `null`;
+    return string;
+  };
+
+  insertAt = (value, index) => {
+    let currentNode = this.Head;
+    let currentIndex = 0;
+    let newNode = new Node(value);
+
+    if (this.Size === 0) {
+      this.append(value);
+      return;
+    }
+
+    if (index === 0) {
+      newNode.next = this.Head;
+      this.Head = newNode;
+      this.Size++;
+      return;
+    }
+
+    if (index > this.Size) {
+      this.append(value);
+      return;
+    }
+
+    if (index === this.Size) {
+      this.Tail.next = newNode;
+      this.Tail = newNode;
+      this.Size++;
+      return;
+    }
+
+    while (currentNode !== null) {
+      if (currentIndex === index - 1) {
+        newNode.next = currentNode.next;
+        currentNode.next = newNode;
+        this.Size++;
+      }
+
+      currentNode = currentNode.next;
+      currentIndex++;
+    }
+  };
+
+  removeAt = (index) => {
+    let currentNode = this.Head;
+    let currentIndex = 0;
+
+    if (index === 0) {
+      this.Head = this.Head.next;
+      this.Size--;
+      return;
+    }
+
+    if (index === this.Size - 1) {
+      const newTail = this.at(index - 1);
+      newTail.next = null;
+      this.Tail = newTail;
+      return;
+    }
+
+    while (currentNode !== null) {
+      if (currentIndex === index - 1) {
+        var nextNode = currentNode.next;
+        currentNode.next = nextNode.next;
+
+        this.Size--;
+      }
+      currentNode = currentNode.next;
+      currentIndex++;
+    }
+  };
 }
-
-// Pop (remove)
-
-// Contains Value
-
-// Find Value
-
-// ToString
-
-// Insert At
 
 // Remove At
